@@ -14,28 +14,28 @@
         <!--表列如果是  xxx_yyy 自动开启驼峰命名的映射xxxYyy-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
 
-        <!--            强制开启log4j,防止被第三方的容器中内置的日志给覆盖了-->
+        <!--强制开启log4j,防止被第三方的容器中内置的日志给覆盖了-->
         <!--<setting name="logImpl" value="LOG4J"/>-->
 
-        <!--            打开延迟加载-->
+        <!--打开延迟加载-->
         <setting name="lazyLoadingEnabled" value="true"/>
-        <!--            开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载-->
+        <!--开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载-->
         <setting name="aggressiveLazyLoading" value="false"/>
 
-        <!--            当调用对象的clone方法时候,才会进行完全加载-->
+        <!--当调用对象的clone方法时候,才会进行完全加载-->
         <setting name="lazyLoadTriggerMethods" value="clone"/>
 
-        <!--            启用二级缓存-->
+        <!--启用二级缓存-->
         <setting name="cacheEnabled" value="true"/>
 
     </settings>
 
-    <!--        配置别名-->
+    <!--配置别名-->
     <typeAliases>
-        <!--            <typeAlias type="tech.aistar.entity.User" alias="user"></typeAlias>-->
+        <!--<typeAlias type="tech.aistar.entity.User" alias="user"></typeAlias>-->
 
-        <!--            扫包即可 别名可以直接使用类的简称的小写-->
-        <!--            <package name="tech.aistar.entity"/>-->
+        <!--扫包即可 别名可以直接使用类的简称的小写-->
+        <!--<package name="tech.aistar.entity"/>-->
         <package name="mybatis.entity"/>
         <package name="mybatis.dto"/>
     </typeAliases>

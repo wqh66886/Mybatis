@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.mapper.CommentMapper">
+
+    <resultMap id="selectByIdMap" type="mybatis.entity.Comment">
+        <id column="id" property="id"/>
+        <result column="content" property="content"/>
+        <result column="state" property="state"/>
+        <result column="parse_count" property="parseCount"/>
+        <result column="createtime" property="createTime"/>
+        <result column="updatetime" property="updateTime"/>
+
+        <association property="user" javaType="mybatis.entity.User">
+            <id column="user_id" property="id" jdbcType="INTEGER"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="status" property="status"/>
+            <result column="register_time" property="registerTime"/>
+        </association>
+    </resultMap>
+
+    <select id="selectById" parameterType="Integer" resultMap="selectByIdMap">
+        select id,content,state,prase_count,createtime,updatetime, user_id from comment  where id = #{id}
+    </select>
+</mapper>
