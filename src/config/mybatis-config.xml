@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--    引入外部的配置文件
+
+        外部文件的同名的key的优先级是高于内部的标签property
+-->
+    <properties resource="config/db.properties"/>
+    <!--    mybatis-config.xml文件叫做Mybatis的配置文件,也是mybatis框架运行的上下文Context环境-->
+
+    <settings>
+        <!--表列如果是  xxx_yyy 自动开启驼峰命名的映射xxxYyy-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+        <!--强制开启log4j,防止被第三方的容器中内置的日志给覆盖了-->
+        <!--<setting name="logImpl" value="LOG4J"/>-->
+
+        <!--打开延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+
+        <!--当调用对象的clone方法时候,才会进行完全加载-->
+        <setting name="lazyLoadTriggerMethods" value="clone"/>
+
+        <!--启用二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+
+    </settings>
+
+    <!--配置别名-->
+    <typeAliases>
+        <!--<typeAlias type="tech.aistar.entity.User" alias="user"></typeAlias>-->
+
+        <!--扫包即可 别名可以直接使用类的简称的小写-->
+        <!--<package name="tech.aistar.entity"/>-->
+        <package name="mybatis.entity"/>
+        <package name="mybatis.dto"/>
+    </typeAliases>
+    <!--    配置数据库相关的配置 - 事务,数据源-->
+    <!--    在我们的项目中分很多环境的,基本上会有三个环境
+
+            - 开发环境 - 我们本地连接
+            - 测试环境 - 本地测试,远程测试
+            - 产品上线环境 - 连接到远程的mysql
+
+            default属性的值就是对应到environment标签的id属性的值,default是什么就代表选择的是什么环境
+            -->
+    <environments default="development">
+        <environment id="development">
+            <!--            mybatis的事务的策略 - jdbc的事务(区别:mybatis的事务默认是手动提交 - 底层默认的是连接的目标数据库的事务mysql)-->
+            <transactionManager type="JDBC"/>
+            <!--            数据源 - 重量级的对象 - 创建和销毁的成本比较高
+                            直接使用了JDBC数据源接口来配置Jdbc的连接对象
+
+                            内置的有三个,type属性来指定
+                            1 - UNPOOLED - 每次请求都会打开和关闭连接.相当于jdbc中的标准的连接方式DriverManager.getConnection();
+                                如果对并发性和及时性考虑不太高的话,可以选择用这个.
+
+                            2 - POOLED - "池化" - 采用"连接池"来管理连接.
+
+                            3 - JNDI - 以前在项目使用到EJB(在spring框架没有出现之前,EJB是一个重量级的)容器的时候.
+            -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${user}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
+        <!--&lt;!&ndash;        产品上线的环境&ndash;&gt;-->
+        <!--<environment id="product">-->
+            <!--&lt;!&ndash;            mybatis的事务的策略 - jdbc的事务(区别:mybatis的事务默认是手动提交 - 底层默认的是连接的目标数据库的事务mysql)&ndash;&gt;-->
+            <!--<transactionManager type="JDBC"/>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${driver}"/>-->
+                <!--<property name="url" value="jdbc:mysql://192.128.2.22:3306/j02_test?useSSL=false"/>-->
+                <!--<property name="username" value="${username}"/>-->
+                <!--<property name="password" value="${password}"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+
+        <!--&lt;!&ndash;        测试环境&ndash;&gt;-->
+        <!--<environment id="test">-->
+            <!--&lt;!&ndash;            mybatis的事务的策略 - jdbc的事务(区别:mybatis的事务默认是手动提交 - 底层默认的是连接的目标数据库的事务mysql)&ndash;&gt;-->
+            <!--<transactionManager type="JDBC"/>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="com.mysql.jdbc.Driver"/>-->
+                <!--<property name="url" value="jdbc:mysql://192.128.2.22:3306/j02_test01"/>-->
+                <!--<property name="username" value="root"/>-->
+                <!--<property name="password" value="root"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    </environments>
+
+    <mappers>
+        <!--        <mapper class="tech.aistar.mapper.UserMapper"></mapper>-->
+
+        <!--        扫描映射文件-->
+        <!--        <mapper resource="resources/user.xml"></mapper>-->
+
+        <!--<mapper resource="tech/aistar/mapper/CommonMap.xml"></mapper>-->
+
+        <!--<mapper resource="mybatis/mapper/UserMapper.xml"/>-->
+        <!--        扫描mapper接口所在的包-->
+        <package name="mybatis.mapper"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.mapper.UserMapper">
+    <select id="selectById" resultType="mybatis.entity.User" parameterType="Integer">
+        select * from user where id = #{id}
+    </select>
+
+    <resultMap id="selectAllMap" type="mybatis.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="status" property="status"/>
+        <result column="register_time" property="registerTime"/>
+    </resultMap>
+    <select id="selectAll" resultMap="selectAllMap">
+        select * from user;
+    </select>
+
+    <update id="updateById">
+        update user set username = #{name} where id = #{id}
+    </update>
+
+
+    <resultMap id="selectByNameMap" type="mybatis.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="status" property="status"/>
+        <result column="register_time" property="registerTime"/>
+    </resultMap>
+    <select id="selectByName" parameterType="String" resultMap="selectByNameMap">
+        select * from user where username like "%"#{username}"%"
+    </select>
+
+    <insert id="insertExample" parameterType="mybatis.entity.User">
+        insert into user(username, password, status, register_time) values(
+        #{username},#{password},#{status},#{registerTime}
+        )
+    </insert>
+
+    <delete id="deleteById" parameterType="Integer">
+        delete from user where id = #{id}
+    </delete>
+</mapper>
